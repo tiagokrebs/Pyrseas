@@ -770,7 +770,7 @@ class Table(DbClass):
         #    stmts.append("ALTER TABLE %s DROP CONSTRAINT %s" % (
         #        self._referred_by._table.qualname(), self._referred_by.name))
 	stmts.append("ALTER TABLE %s DISABLE TRIGGER ALL" % self.qualname())
-        stmts.append("TRUNCATE ONLY %s" % self.qualname())
+        stmts.append("DELETE FROM %s" % self.qualname())
         stmts.append(("\\copy ", self.qualname(), " from '", filepath,
                       "' csv"))
         #if hasattr(self, '_referred_by'):
