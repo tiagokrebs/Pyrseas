@@ -766,14 +766,16 @@ class Table(DbClass):
         """
         filepath = os.path.join(dirpath, self.extern_filename('data'))
         stmts = []
-        if hasattr(self, '_referred_by'):
-            stmts.append("ALTER TABLE %s DROP CONSTRAINT %s" % (
-                self._referred_by._table.qualname(), self._referred_by.name))
+        #if hasattr(self, '_referred_by'):
+        #    stmts.append("ALTER TABLE %s DROP CONSTRAINT %s" % (
+        #        self._referred_by._table.qualname(), self._referred_by.name))
+	stmts.append("ALTER TABLE %s DISABLE TRIGGER ALL", % self.qualname())
         stmts.append("TRUNCATE ONLY %s" % self.qualname())
         stmts.append(("\\copy ", self.qualname(), " from '", filepath,
                       "' csv"))
-        if hasattr(self, '_referred_by'):
-            stmts.append(self._referred_by.add())
+        #if hasattr(self, '_referred_by'):
+        #    stmts.append(self._referred_by.add())
+	stmts.append("ALTER TABLE %s ENABLE TRIGGER ALL", % self.qualname())
         return stmts
 
     def get_implied_deps(self, db):
