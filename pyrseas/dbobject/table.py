@@ -775,7 +775,7 @@ class Table(DbClass):
                       "' csv"))
         #if hasattr(self, '_referred_by'):
         #    stmts.append(self._referred_by.add())
-	stmts.append("ALTER TABLE %s ENABLE TRIGGER ALL" % self.qualname())
+        stmts.append("ALTER TABLE %s ENABLE TRIGGER ALL" % self.qualname())
         return stmts
 
     def get_implied_deps(self, db):
